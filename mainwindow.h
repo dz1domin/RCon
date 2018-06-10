@@ -17,6 +17,7 @@
 #include <vector>
 #include <bitset>
 #include <QListWidgetItem>
+#include <QTabWidget>
 
 namespace Ui {
 class MainWindow;
@@ -41,11 +42,17 @@ private slots:
 
     void on_listWidget_itemPressed(QListWidgetItem *item);
 
+    void on_actionPrzetworz_wybrane_zdjecie_triggered();
+
+    void on_profileTabWidget_currentChanged(int index);
+
 private:
     bool loadFolder(const QDir& dir);
     int loadFile(const QString& path);
     bool processRaw(const QString& path); //dodac flagi
     void rescale(const double ratio);
+    void setParams();
+    QImage draw(bool inColor = true);
 
 
     /////////////////mouse handling
@@ -60,13 +67,18 @@ private:
     ////////////////////
 
 
+
     Ui::MainWindow *ui;
     QString versionNumber = "v0.1d";
 
     int currentImageIndex = 0;
     QImage currentImg;
-    std::vector<QImage> loadedImages;
-    std::bitset<128> loadedBools;
+    int currW=0,currH=0;
+    LibRaw processor;
+
+    QImage imgtab1,imgtab2,imgtab3;
+    QString imgtab1name,imgtab2name,imgtab3name;
+
 };
 
 #endif // MAINWINDOW_H
