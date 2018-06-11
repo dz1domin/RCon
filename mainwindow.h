@@ -18,6 +18,8 @@
 #include <bitset>
 #include <QListWidgetItem>
 #include <QTabWidget>
+#include <QImageWriter>
+#include <QImageReader>
 
 namespace Ui {
 class MainWindow;
@@ -40,15 +42,17 @@ private slots:
 
     void on_actionZamknij_triggered();
 
-    void on_listWidget_itemPressed(QListWidgetItem *item);
 
     void on_actionPrzetworz_wybrane_zdjecie_triggered();
 
     void on_profileTabWidget_currentChanged(int index);
 
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     bool loadFolder(const QDir& dir);
     int loadFile(const QString& path);
+    bool saveFile(const QString& path);
     bool processRaw(const QString& path); //dodac flagi
     void rescale(const double ratio);
     void setParams();
@@ -71,6 +75,7 @@ private:
     Ui::MainWindow *ui;
     QString versionNumber = "v0.1d";
 
+    bool galleryLoaded = false;
     int currentImageIndex = 0;
     QImage currentImg;
     int currW=0,currH=0;
