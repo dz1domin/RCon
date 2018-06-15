@@ -266,7 +266,9 @@ bool MainWindow::processRaw(const QString& path) //dodac flagi
 
     ui->ImageContainingLabel->setPixmap(QPixmap::fromImage(currentImg));
 
-    luminance_histogram();
+    luminanceHistogram = luminance_histogram();
+
+    ui->P1histogramLabel->setPixmap(QPixmap::fromImage(luminanceHistogram));
 
     return true;
 }
@@ -436,8 +438,6 @@ QImage MainWindow::draw(bool inColor)
     }
     processor.dcraw_clear_mem(todelete);
 
-
-
     if(!inColor){
         for(int y=0; y<h;++y){
             uchar *line = img.scanLine(y);
@@ -460,8 +460,6 @@ QImage MainWindow::draw(bool inColor)
 //        }
 
     }
-
-
 
     return img;
 }
@@ -506,12 +504,12 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 }
 
 
-void MainWindow::luminance_histogram()
+QImage MainWindow::luminance_histogram()
 {
     int w = currentImg.width();
     int h = currentImg.height();
 
-    uchar luminance[256] = {};
+    std::vector<int> luminance(256);
 
     for(int y=0; y<h;++y){
         uchar *line = currentImg.scanLine(y);
@@ -520,10 +518,35 @@ void MainWindow::luminance_histogram()
             pixel_luminance += static_cast<uchar>(static_cast<double>(line[x]) * 0.0722); //b
             pixel_luminance += static_cast<uchar>(static_cast<double>(line[x+1]) * 0.7152); //g
             pixel_luminance += static_cast<uchar>(static_cast<double>(line[x+2]) * 0.2126); //r
-            ++luminance[pixel_luminance];
+            luminance[pixel_luminance]++;
         }
     }
 
+    int max_luminance = *std::max_element(luminance.begin(), luminance.end());
+
     for(int i = 0; i < 256; ++i)
-        qDebug() << luminance[i] << '\n';
+        luminance[i] = (static_cast<double>(luminance[i]) / static_cast<double>(max_luminance)) * 256.0;
+
+    QImage img(256, 256, QImage::Format_ARGB32);
+
+
+    for(int y=0; y<256;++y){
+        uchar *line = img.scanLine(y);
+        for(int x=0; x<256*4;x+=4){
+            if(luminance.at(x/4) <= 256 - y){
+                line[x] = 0; //b
+                line[x+1] = 0; //g
+                line[x+2] = 0; //r
+                line[x+3] =255; //alpha
+            }
+            else{
+                line[x] = 255; //b
+                line[x+1] = 255; //g
+                line[x+2] = 255; //r
+                line[x+3] =255; //alpha
+            }
+        }
+    }
+
+    return img;
 }

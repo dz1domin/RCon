@@ -57,7 +57,7 @@ private:
     void rescale(const double ratio);
     void setParams();
     QImage draw(bool inColor = true);
-    void luminance_histogram();
+    QImage luminance_histogram();
 
 
     /////////////////mouse handling
@@ -81,6 +81,7 @@ private:
     QImage currentImg;
     int currW=0,currH=0;
     LibRaw processor;
+    QImage luminanceHistogram;
 
     QImage imgtab1,imgtab2,imgtab3;
     QString imgtab1name,imgtab2name,imgtab3name;
