@@ -81,10 +81,10 @@ private:
     QImage currentImg;
     int currW=0,currH=0;
     LibRaw processor;
-    QImage luminanceHistogram;
 
     QImage imgtab1,imgtab2,imgtab3;
     QString imgtab1name,imgtab2name,imgtab3name;
+    QImage luminanceHistogram1, luminanceHistogram2, luminanceHistogram3;
 
 };
 

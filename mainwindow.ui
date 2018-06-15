@@ -124,7 +124,7 @@
            </size>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="usesScrollButtons">
            <bool>false</bool>
@@ -159,7 +159,7 @@
                 <widget class="QWidget" name="P1OptionsContainer">
                  <property name="geometry">
                   <rect>
-                   <x>0</x>
+                   <x>-60</x>
                    <y>-35</y>
                    <width>515</width>
                    <height>493</height>
@@ -519,7 +519,7 @@
                   <property name="geometry">
                    <rect>
                     <x>0</x>
-                    <y>10</y>
+                    <y>0</y>
                     <width>256</width>
                     <height>256</height>
                    </rect>
@@ -565,7 +565,7 @@
                 <widget class="QWidget" name="P2OptionsContainer">
                  <property name="geometry">
                   <rect>
-                   <x>0</x>
+                   <x>-240</x>
                    <y>0</y>
                    <width>515</width>
                    <height>493</height>
@@ -896,10 +896,45 @@
             <item>
              <layout class="QVBoxLayout" name="P2HistogramLayout">
               <item>
-               <widget class="QPushButton" name="zapychacz_2">
-                <property name="text">
-                 <string>zapychacz</string>
+               <widget class="QScrollArea" name="P2histogramDisplayArea">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
+                <property name="widgetResizable">
+                 <bool>true</bool>
+                </property>
+                <widget class="QWidget" name="scrollAreaWidgetContents_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>222</width>
+                   <height>74</height>
+                  </rect>
+                 </property>
+                 <widget class="QLabel" name="P2histogramLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>256</width>
+                    <height>256</height>
+                   </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -1261,10 +1296,39 @@
             <item>
              <layout class="QVBoxLayout" name="P3HistogramLayout">
               <item>
-               <widget class="QPushButton" name="zapychacz_4">
-                <property name="text">
-                 <string>zapychacz</string>
+               <widget class="QScrollArea" name="P3histogramDisplayArea">
+                <property name="widgetResizable">
+                 <bool>true</bool>
                 </property>
+                <widget class="QWidget" name="scrollAreaWidgetContents_4">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>222</width>
+                   <height>74</height>
+                  </rect>
+                 </property>
+                 <widget class="QLabel" name="P3histogramLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>256</width>
+                    <height>256</height>
+                   </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </widget>
                </widget>
               </item>
              </layout>

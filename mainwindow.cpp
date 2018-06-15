@@ -258,17 +258,23 @@ bool MainWindow::processRaw(const QString& path) //dodac flagi
         currentImg = draw();
 
 
-    if(ui->profileTabWidget->currentWidget() == ui->profil1Tab) imgtab1 = currentImg;
-    if(ui->profileTabWidget->currentWidget() == ui->profil2Tab) imgtab2 = currentImg;
-    if(ui->profileTabWidget->currentWidget() == ui->profil3Tab) imgtab3 = currentImg;
-
-
+    if(ui->profileTabWidget->currentWidget() == ui->profil1Tab){
+        imgtab1 = currentImg;
+        luminanceHistogram1 = luminance_histogram();
+        ui->P1histogramLabel->setPixmap(QPixmap::fromImage(luminanceHistogram1));
+    }
+    if(ui->profileTabWidget->currentWidget() == ui->profil2Tab){
+        imgtab2 = currentImg;
+        luminanceHistogram2 = luminance_histogram();
+        ui->P2histogramLabel->setPixmap(QPixmap::fromImage(luminanceHistogram2));
+    }
+    if(ui->profileTabWidget->currentWidget() == ui->profil3Tab){
+        imgtab3 = currentImg;
+        luminanceHistogram3 = luminance_histogram();
+        ui->P3histogramLabel->setPixmap(QPixmap::fromImage(luminanceHistogram3));
+    }
 
     ui->ImageContainingLabel->setPixmap(QPixmap::fromImage(currentImg));
-
-    luminanceHistogram = luminance_histogram();
-
-    ui->P1histogramLabel->setPixmap(QPixmap::fromImage(luminanceHistogram));
 
     return true;
 }
