@@ -265,12 +265,14 @@ bool MainWindow::processRaw(const QString& path) //dodac flagi
 
 
     ui->ImageContainingLabel->setPixmap(QPixmap::fromImage(currentImg));
+
+    luminance_histogram();
+
     return true;
 }
 
 void MainWindow::rescale(const double ratio)
 {
-
     double xs = static_cast<double>(ui->ImageDisplayArea->horizontalScrollBar()->value())/(ui->ImageDisplayArea->horizontalScrollBar()->maximum() - ui->ImageDisplayArea->horizontalScrollBar()->minimum());
     double ys = static_cast<double>(ui->ImageDisplayArea->verticalScrollBar()->value())/(ui->ImageDisplayArea->verticalScrollBar()->maximum() - ui->ImageDisplayArea->verticalScrollBar()->minimum());
 
@@ -434,6 +436,8 @@ QImage MainWindow::draw(bool inColor)
     }
     processor.dcraw_clear_mem(todelete);
 
+
+
     if(!inColor){
         for(int y=0; y<h;++y){
             uchar *line = img.scanLine(y);
@@ -456,6 +460,8 @@ QImage MainWindow::draw(bool inColor)
 //        }
 
     }
+
+
 
     return img;
 }
@@ -497,4 +503,27 @@ void MainWindow::on_profileTabWidget_currentChanged(int index)
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     processRaw(item->text());
+}
+
+
+void MainWindow::luminance_histogram()
+{
+    int w = currentImg.width();
+    int h = currentImg.height();
+
+    uchar luminance[256] = {};
+
+    for(int y=0; y<h;++y){
+        uchar *line = currentImg.scanLine(y);
+        for(int x=0; x<w*4;x+=4){
+            uint pixel_luminance = 0;
+            pixel_luminance += static_cast<uchar>(static_cast<double>(line[x]) * 0.0722); //b
+            pixel_luminance += static_cast<uchar>(static_cast<double>(line[x+1]) * 0.7152); //g
+            pixel_luminance += static_cast<uchar>(static_cast<double>(line[x+2]) * 0.2126); //r
+            ++luminance[pixel_luminance];
+        }
+    }
+
+    for(int i = 0; i < 256; ++i)
+        qDebug() << luminance[i] << '\n';
 }

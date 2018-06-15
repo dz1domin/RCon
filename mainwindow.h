@@ -57,6 +57,7 @@ private:
     void rescale(const double ratio);
     void setParams();
     QImage draw(bool inColor = true);
+    void luminance_histogram();
 
 
     /////////////////mouse handling
