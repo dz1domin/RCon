@@ -1,2 +1,2 @@
 # RCon
-RAW image processing.
+#### This is application with GUI done in QT which read RAW images using Libraw library and display them. Then user can do some transformations, check histogram and save image in different formats.
