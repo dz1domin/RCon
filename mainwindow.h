@@ -2,11 +2,24 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "C:\Users\MSI\Desktop\RCon\LibRaw-0.18.11\libraw\libraw.h"
+
+#include <libraw.h>
 #include <qfiledialog.h>
 #include <qdebug.h>
 #include <qerrormessage.h>
 #include <qmessagebox.h>
+#include <QImage>
+#include <QPixmap>
+#include <QPainter>
+#include <QWheelEvent>
+#include <QMouseEvent>
+#include <QScrollBar>
+#include <vector>
+#include <bitset>
+#include <QListWidgetItem>
+#include <QTabWidget>
+#include <QImageWriter>
+#include <QImageReader>
 
 namespace Ui {
 class MainWindow;
@@ -29,12 +42,50 @@ private slots:
 
     void on_actionZamknij_triggered();
 
+
+    void on_actionPrzetworz_wybrane_zdjecie_triggered();
+
+    void on_profileTabWidget_currentChanged(int index);
+
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+
 private:
-    bool loadFile(const QDir& dir);
+    bool loadFolder(const QDir& dir);
+    int loadFile(const QString& path);
+    bool saveFile(const QString& path);
+    bool processRaw(const QString& path); //dodac flagi
+    void rescale(const double ratio);
+    void setParams();
+    QImage draw(bool inColor = true);
+    QImage luminance_histogram();
+
+
+    /////////////////mouse handling
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
+    QPoint lastPoint;
+    bool pressedonImage = false;
+    bool pressedonGallery = false;
+    ////////////////////
+
+
 
     Ui::MainWindow *ui;
-
     QString versionNumber = "v0.1d";
+
+    bool galleryLoaded = false;
+    int currentImageIndex = 0;
+    QImage currentImg;
+    int currW=0,currH=0;
+    LibRaw processor;
+
+    QImage imgtab1,imgtab2,imgtab3;
+    QString imgtab1name,imgtab2name,imgtab3name;
+    QImage luminanceHistogram1, luminanceHistogram2, luminanceHistogram3;
+
 };
 
 #endif // MAINWINDOW_H
